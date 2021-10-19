@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: eat-service
+  data:
+    mongodb:
+      uri: mongodb://root:123456@47.96.109.175:27017/better-eat?authSource=admin&authMechanism=SCRAM-SHA-1
+server:
+  port: 32320
+
+
