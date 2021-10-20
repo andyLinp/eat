@@ -42,7 +42,7 @@ public class UserCtrl {
         }
     }
 
-    @PostMapping
+    @PutMapping
     ResponseEntity updateUser(@RequestBody UserDocument bean){
         ResponseBean responseBean = new ResponseBean();
         try{
