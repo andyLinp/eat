@@ -45,6 +45,14 @@ public class UserDocument {
      * false -none
      */
     private Boolean isDel;
+    /**
+     * time for created
+     */
+    private long createdTime;
+    /**
+     * time for updated
+     */
+    private long updatedTime;
 
 
 }
