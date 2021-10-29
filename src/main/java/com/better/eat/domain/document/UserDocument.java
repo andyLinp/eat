@@ -53,6 +53,10 @@ public class UserDocument {
      * time for updated
      */
     private long updatedTime;
+    public UserDocument() {
 
-
+    }
+    public UserDocument(String name) {
+        this.name = name;
+    }
 }
