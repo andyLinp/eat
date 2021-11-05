@@ -1,6 +1,7 @@
 package com.better.eat.ctrl;
 
 import com.better.eat.domain.ResponseBean;
+import com.better.eat.domain.annotation.EagleEye;
 import com.better.eat.service.HelloWorldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,21 +19,20 @@ public class HelloWorldCtrl {
     public HelloWorldCtrl(HelloWorldService service) {
         this.service = service;
     }
-
+    @EagleEye
     @GetMapping
-    public ResponseBean helloWorld(String world){
-        ResponseBean responseBean = new ResponseBean();
+    public Object helloWorld(String world){
+        ResponseBean rb = new ResponseBean();
         try{
-            String line = service.getWorld(world);
-            responseBean.setSuccess(true);
-            responseBean.setResult(line);
-            responseBean.setExtInfo("Hello World!");
-            return responseBean;
-        }catch (Exception e){
-            responseBean.setSuccess(false);
-            responseBean.setErrorMsg(e.getMessage());
-            responseBean.setExtInfo("Unable to connect to the world!");
-            return responseBean;
+           return service.getWorld(world);
+        }catch(RuntimeException e){
+            rb.setCode(501);
+            rb.setDesc(e.getMessage());
+            return rb;
+        }catch(Exception e){
+            rb.setCode(500);
+            rb.setDesc(e.getMessage());
+            return rb;
         }
     }
 }

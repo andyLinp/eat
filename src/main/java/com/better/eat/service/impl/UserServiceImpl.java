@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
             //update user info
             updateUser(bean);
         }
-        if (0 == bean.getPhoneNumber()) { rb.setSuccess(false);
-            rb.setErrorMsg("phone number should not be null");
+        if (0 == bean.getPhoneNumber()) { rb.setCode(200);
+            rb.setDesc("phone number should not be null");
             return rb;
         }
         Query query = new Query();
@@ -44,15 +44,15 @@ public class UserServiceImpl implements UserService {
                 .addCriteria(Criteria.where("isDel").is(false));
         List<UserDocument> userList = mongoTemplate.find(query, UserDocument.class);
         if (CollectionUtils.isNotEmpty(userList)) {
-            rb.setSuccess(false);
-            rb.setErrorMsg("phone number is used");
+            rb.setCode(500);
+            rb.setDesc("phone number is used");
             return rb;
         }
         bean.setIsDel(false);
         bean.setCreatedTime(System.currentTimeMillis());
         mongoTemplate.save(bean);
-        rb.setSuccess(true);
-        rb.setExtInfo(GeneralResponseMessageConstant.SUCCESS);
+        rb.setCode(200);
+        rb.setDesc(GeneralResponseMessageConstant.SUCCESS);
         return rb;
     }
 
@@ -63,13 +63,13 @@ public class UserServiceImpl implements UserService {
         ResponseBean rb = new ResponseBean();
         boolean isDel = validIsDel(bean.getId());
         if (isDel){
-            rb.setSuccess(false);
-            rb.setErrorMsg("bean is deleted");
+            rb.setCode(500);
+            rb.setDesc("bean is deleted");
             return rb;
         }
         mongoTemplate.save(bean);
-        rb.setSuccess(true);
-        rb.setExtInfo(GeneralResponseMessageConstant.SUCCESS);
+        rb.setCode(200);
+        rb.setDesc(GeneralResponseMessageConstant.SUCCESS);
         return rb;
     }
 
@@ -79,8 +79,8 @@ public class UserServiceImpl implements UserService {
         ResponseBean rb = new ResponseBean();
         boolean isDel = validIsDel(id);
         if (isDel){
-            rb.setSuccess(false);
-            rb.setErrorMsg("bean is deleted");
+            rb.setCode(500);
+            rb.setDesc("bean is deleted");
             return rb;
         }
         Query query = new Query();
@@ -89,8 +89,8 @@ public class UserServiceImpl implements UserService {
         Update update = new Update();
         update.set("isDel",true);
         mongoTemplate.updateMulti(query,update,UserDocument.class);
-        rb.setSuccess(true);
-        rb.setExtInfo(GeneralResponseMessageConstant.SUCCESS);
+        rb.setCode(200);
+        rb.setDesc(GeneralResponseMessageConstant.SUCCESS);
         return rb;
     }
 
@@ -102,12 +102,12 @@ public class UserServiceImpl implements UserService {
             List<UserDocument> users = mongoTemplate.findAll(UserDocument.class);
             if (CollectionUtils.isNotEmpty(users)){
                 List<UserDocument> collect = users.stream().filter(item -> item.getIsDel().equals(false)).collect(Collectors.toList());
-                rb.setResult(collect);
+                rb.setData(collect);
             }else{
-                rb.setResult(users);
+                rb.setData(users);
             }
-            rb.setSuccess(true);
-            rb.setExtInfo(GeneralResponseMessageConstant.SUCCESS);
+            rb.setCode(200);
+            rb.setDesc(GeneralResponseMessageConstant.SUCCESS);
             return rb;
         }
         Set<String> keys = params.keySet();
@@ -133,9 +133,9 @@ public class UserServiceImpl implements UserService {
         }
         query.addCriteria(Criteria.where("isDel").is(false));
         List<UserDocument> userDocuments = mongoTemplate.find(query, UserDocument.class);
-        rb.setSuccess(true);
-        rb.setResult(userDocuments);
-        rb.setExtInfo(GeneralResponseMessageConstant.SUCCESS);
+        rb.setCode(200);
+        rb.setData(userDocuments);
+        rb.setDesc(GeneralResponseMessageConstant.SUCCESS);
         return rb;
     }
 

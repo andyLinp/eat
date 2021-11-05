@@ -31,13 +31,9 @@ public class UserCtrl {
         try{
             return ResponseEntity.ok(userService.addUser(bean));
         }catch (RuntimeException e) {
-            responseBean.setErrorMsg(e.getMessage());
-            responseBean.setSuccess(false);
             return ResponseEntity.ok(responseBean);
         } catch (Exception e){
             logger.error(e.toString());
-            responseBean.setErrorMsg(e.toString());
-            responseBean.setSuccess(false);
             return  new ResponseEntity(responseBean, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -48,13 +44,9 @@ public class UserCtrl {
         try{
             return ResponseEntity.ok(userService.updateUser(bean));
         }catch (RuntimeException e) {
-            responseBean.setErrorMsg(e.getMessage());
-            responseBean.setSuccess(false);
             return ResponseEntity.ok(responseBean);
         } catch (Exception e){
             logger.error(e.toString());
-            responseBean.setErrorMsg(e.toString());
-            responseBean.setSuccess(false);
             return  new ResponseEntity(responseBean, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -65,13 +57,9 @@ public class UserCtrl {
         try{
             return ResponseEntity.ok(userService.deleteUser(id));
         }catch (RuntimeException e) {
-            responseBean.setErrorMsg(e.getMessage());
-            responseBean.setSuccess(false);
             return ResponseEntity.ok(responseBean);
         } catch (Exception e){
             logger.error(e.toString());
-            responseBean.setErrorMsg(e.toString());
-            responseBean.setSuccess(false);
             return  new ResponseEntity(responseBean, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -82,13 +70,9 @@ public class UserCtrl {
         try{
             return ResponseEntity.ok(userService.getUserByConditions(params));
         }catch (RuntimeException e) {
-            responseBean.setErrorMsg(e.getMessage());
-            responseBean.setSuccess(false);
             return ResponseEntity.ok(responseBean);
         } catch (Exception e){
             logger.error(e.toString());
-            responseBean.setErrorMsg(e.toString());
-            responseBean.setSuccess(false);
             return  new ResponseEntity(responseBean, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
