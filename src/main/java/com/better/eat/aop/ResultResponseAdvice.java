@@ -36,15 +36,6 @@ public class ResultResponseAdvice<T> implements ResponseBodyAdvice<T> {
         }
         final ResponseBean<T> result = new ResponseBean<>();
         result.setCode(200).setDesc(GeneralResponseMessageConstant.SUCCESS).setData(body);
-        if (body instanceof String) {
-            ObjectMapper om = new ObjectMapper();
-            try {
-                return (T) om.writeValueAsString(ResponseBean.success(body));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("result"+result);
         return (T) result;
     }
 }
